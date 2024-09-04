@@ -1,43 +1,76 @@
-﻿// See https://aka.ms/new-console-template for more information
-using System.ComponentModel;
+﻿using list;
 
-Console.WriteLine("Hello, World!");
-//Write a code that will calculate students assign grades to
-//students and then return a record with the complete  data
-List<string> Student = new List<string> { "Godwin", "Grace", "Amos",};
-List<string> Studentrecord = new List<string> { "Maths", "English", "chemistry" };
-String[,] StudentGrades =
-{{ "Godwin[maths 50] [English, 70] [chemistry, 20]" },
-    { "Grace[maths 50] [English, 70] [chemistry, 20]"},
-    { "Amos[maths 50] [English, 70] [chemistry, 20]" }
+//Grade grade = new Grade();
+
+
+
+List<Student> Student = new List<Student>
+{
+    new Student
+    {
+        FullName = "Abdul",
+        Id = 1
+    },
+    new Student
+    {
+        FullName = "mohammed",
+        Id=2
+    },
 };
 
-
-for (int i = 0; i < StudentGrades.GetHashCode(); i++)
+List<StudentRecord> StudentRecord = new List<StudentRecord>
 {
-    for (int j = 0; j < StudentGrades.GetHashCode(); j++)
+    new StudentRecord
     {
-        Console.Write(StudentGrades[i, j] + " ");
+        StudentId= 1,
+        EnglishScore = 30,
+        MathsScore = 50
+    },
+    new StudentRecord
+    {
+        StudentId= 2,
+        EnglishScore = 70,
+        MathsScore = 50
     }
-    Console.WriteLine();
+};
+
+var studentRecordWithGrade = StudentRecord.Select(x => new RecordWithGrade
+{
+    EnglishScore = x.EnglishScore,
+    MathsScore = x.MathsScore,
+    StudentId = x.StudentId,
+    EnglishGrade = Grade.CalculateGrade(x.EnglishScore),
+    MathsGrade = Grade.CalculateGrade(x.MathsScore)
+}).ToList();
+
+for (int i = 0; i < studentRecordWithGrade.Count; i++)
+{
+    RecordWithGrade? student = studentRecordWithGrade[i];
+    Console.WriteLine(studentRecordWithGrade);
 }
+
+public class RecordWithGrade
+{
+    public int StudentId { get; set; }
+    public int EnglishScore { get; set; }
+    public int MathsScore { get; set; }
+    public char EnglishGrade {  get; set; }
+    public char MathsGrade { get; set; }
     
-
-    //public class Student
-    //{
-    //    public int Id { get; set; }
-    //    public string FullName { get; set; }
-         
+}
 
 
+public class Student
+{
+    public int Id { get; set; }
+    public string FullName { get; set; }
+}
 
-    //}
+public class StudentRecord
+{
+    public int StudentId { get; set; }
+    public int EnglishScore { get; set; }
+    public int MathsScore { get; set; }
 
-    //public class StudentRecord
-    //{
-    //    public int StudentId { get; set; }
-    //    public int EnglishScore { get; set; }
-    //    public int MathsScore { get; set; }
-
-    //}
+}
 
